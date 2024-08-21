@@ -45,11 +45,10 @@ def pix_confirmation():
 
 @app.route('/payments/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
-    return render_template('payment.html')
+    payment = Payment.query.get(payment_id)
 
 
-
-
+    return render_template('payment.html', payment_id=payment.id, value=payment.value)
 
 
 
