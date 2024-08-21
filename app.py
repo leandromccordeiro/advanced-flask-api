@@ -47,9 +47,22 @@ def pix_confirmation():
 def payment_pix_page(payment_id):
     return 'pagamento pix'
 
+@app.route('/payment/search', methods=['GET'])
+def search_payment():
+    payments = Payment.query.all()
 
-
-
+    payment_list = []
+    for payment in payments:
+        payment_dict = {
+            'id': payment.id,
+            'value': payment.value,
+            'paid': payment.paid,
+            'bank_payment_id': payment.bank_payment_id,
+            'qr_code': payment.qr_code,
+            'expiration_date': payment.expiration_date
+        }
+        payment_list.append(payment_dict)
+    return jsonify(payment_list)
 
 
 if __name__ == '__main__':
