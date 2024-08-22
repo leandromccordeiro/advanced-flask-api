@@ -43,6 +43,21 @@ def get_image(file_name):
 #Conhecida como web hook
 @app.route('/payments/pix/confirmation', methods=['POST'])
 def pix_confirmation():
+    data = request.get_json()
+
+    if 'bank_payment_id' not in data and 'value' not in data:
+        return jsonify({'messege': 'Invalid payment data'}), 400
+    
+    payment = Payment.query.filter_by(bank_payment_id=data.get('bank_payment_id')).first()
+
+    if not payment or paid == True:
+        return jsonify({'messege': 'Payment not found'}), 404
+
+    if data.get('value') != payment.value:
+        return jsonify({'messege': 'Invalid payment data'}), 400
+    
+    payment.paid = True
+    db.session.commit()
     return jsonify({'messege':'The payment has been confirmed'})
 
 @app.route('/payments/pix/<int:payment_id>', methods=['GET'])
