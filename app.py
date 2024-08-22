@@ -60,9 +60,7 @@ def handle_connec():
     print("Client connected to the server")
 
 
-
-
-@app.route('/payment/search', methods=['GET'])
+@app.route('/payments/search', methods=['GET'])
 def search_payment():
     payments = Payment.query.all()
 
