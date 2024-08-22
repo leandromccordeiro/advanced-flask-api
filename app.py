@@ -50,7 +50,7 @@ def pix_confirmation():
     
     payment = Payment.query.filter_by(bank_payment_id=data.get('bank_payment_id')).first()
 
-    if not payment or paid == True:
+    if not payment or payment.paid == True:
         return jsonify({'messege': 'Payment not found'}), 404
 
     if data.get('value') != payment.value:
